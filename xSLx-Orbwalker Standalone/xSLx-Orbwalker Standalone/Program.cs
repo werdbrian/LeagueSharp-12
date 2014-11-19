@@ -21,7 +21,7 @@ namespace xSLx_Orbwalker_Standalone
             Game.PrintChat("<font color='#FF0000'>xSLx Orbwalker standalone</font> loaded. - <font color='#5882FA'>E2Slayer</font>");
             var menu = new Menu("xSLx Orbwalker", "my_mainmenu", true);
             var orbwalkerMenu = new Menu("xSLx Orbwalker", "my_Orbwalker");
-            LXOrbwalker.AddToMenu(orbwalkerMenu);
+            xSLxOrbwalker.AddToMenu(orbwalkerMenu);
             menu.AddSubMenu(orbwalkerMenu);
             menu.AddToMainMenu();
         }
