@@ -81,7 +81,7 @@ namespace Teemo___Satan_Yordle
             Menu.AddSubMenu(new Menu("R Settings", "Rsettings"));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomH", "Auto Use R on High Priorities").SetValue(true));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomM", "Auto Use R on Midium Priorities").SetValue(true));
-            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomL", "Auto Use R on Low Priorities").SetValue(false));
+           // Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomL", "Auto Use R on Low Priorities").SetValue(false));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(true));
  
 
