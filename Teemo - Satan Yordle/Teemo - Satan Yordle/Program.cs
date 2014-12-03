@@ -80,7 +80,7 @@ namespace Teemo___Satan_Yordle
             //R settings
             Menu.AddSubMenu(new Menu("R Settings", "Rsettings"));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomH", "Auto Use R on High Priorities").SetValue(true));
-            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomM", "Auto Use R on Midium Priorities").SetValue(true));
+            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomM", "Auto Use R on Medium Priorities").SetValue(true));
            // Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomL", "Auto Use R on Low Priorities").SetValue(false));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(true));
  
@@ -99,7 +99,7 @@ namespace Teemo___Satan_Yordle
             Menu.SubMenu("Drawing").AddItem(new MenuItem("DrawR", "R Range").SetValue(new Circle(false, Color.Green)));
             Menu.SubMenu("Drawing").AddItem(new MenuItem("DrawRCD", "R Cooldown").SetValue(new Circle(false, Color.DarkRed)));
             Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomH", "Shroom High Priorities").SetValue(true));
-            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomM", "Shroom Midium Priorities").SetValue(true));
+            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomM", "Shroom Medium Priorities").SetValue(true));
            
             Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomV", "Shroom Vision Range").SetValue(new Slider(1500, 2500, 1000)));
 
