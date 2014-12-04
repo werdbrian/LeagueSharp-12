@@ -15,16 +15,18 @@ namespace Teemo___Satan_Yordle
 {
     class Program
     {
-        private static Obj_AI_Hero Player { get { return ObjectManager.Player; } }  
+        private static Obj_AI_Hero Player { get { return ObjectManager.Player; } }
         private static Orbwalking.Orbwalker Orbwalker;
         private static Spell Q, W, E, R;
 
-        private static Items.Item DFG;
+        private static Items.Item DFG, Botrk, Frostclaim, Youmuus, Hextech, Cutlass;
+
+
         private static Menu Menu;
 
         private static ShroomTables ShroomPositions;
 
-        public const string VersionE = "1.0.0";
+        public const string VersionE = "1.0.1";
 
         static void Main(string[] args)
         {
@@ -35,7 +37,7 @@ namespace Teemo___Satan_Yordle
         private static void Game_OnGameLoad(EventArgs args)
         {
             if (Player.ChampionName != "Teemo") //Satan
-                return; 
+                return;
 
 
             Q = new Spell(SpellSlot.Q, 580);
@@ -44,8 +46,13 @@ namespace Teemo___Satan_Yordle
 
             Q.SetTargetted(0f, 2000f);
             R.SetSkillshot(0.1f, 75f, float.MaxValue, false, SkillshotType.SkillshotCircle);
-
-
+            //  DFG = Utility.Map.GetMap()._MapType == Utility.Map.MapType.TwistedTreeline ? new Items.Item(3188, 750) : new Items.Item(3128, 750);
+            DFG = new Items.Item(3128, 750);
+            Cutlass = new Items.Item(3144, 450);
+            Hextech = new Items.Item(3146, 700);
+            Frostclaim = new Items.Item(3092, 850);
+            Botrk = new Items.Item(3153, 450);
+            Youmuus = new Items.Item(3142, 650);
 
 
             //Base menu
@@ -70,26 +77,35 @@ namespace Teemo___Satan_Yordle
             Menu.AddSubMenu(new Menu("Harass", "Harass"));
             Menu.SubMenu("Harass").AddItem(new MenuItem("UseQH", "Use Q").SetValue(true));
             Menu.SubMenu("Harass").AddItem(new MenuItem("UseWH", "Use W").SetValue(false));
-           
+
             // Does harass need R? - decide it later
             Menu.SubMenu("Harass").AddItem(new MenuItem("HarassMana", "Only Harass if mana >").SetValue(new Slider(0, 0, 100)));
             Menu.SubMenu("Harass").AddItem(new MenuItem("HarassActive", "Harass").SetValue(new KeyBind("C".ToCharArray()[0], KeyBindType.Press)));
             Menu.SubMenu("Harass").AddItem(new MenuItem("HarassActiveT", "Harass (Toggle)").SetValue(new KeyBind("Y".ToCharArray()[0], KeyBindType.Toggle, true)));
 
+            Menu.AddSubMenu(new Menu("Items", "Items"));
+            Menu.SubMenu("Items").AddItem(new MenuItem("DFG1", "Deathfire Grasp").SetValue(true));
+            Menu.SubMenu("Items").AddItem(new MenuItem("Cutlass1", "Bilgewater's Cutlass").SetValue(true));
+            Menu.SubMenu("Items").AddItem(new MenuItem("Hextech1", "Hextech Gunblade").SetValue(true));
+            Menu.SubMenu("Items").AddItem(new MenuItem("Frostclaim1", "Frost Queen's Claim").SetValue(true));
+            Menu.SubMenu("Items").AddItem(new MenuItem("Botrk1", "Blade of the Ruined King").SetValue(true));
+            Menu.SubMenu("Items").AddItem(new MenuItem("Youmuus1", "Youmuu's Ghostblade").SetValue(true));
+
+
 
             //R settings
             Menu.AddSubMenu(new Menu("R Settings", "Rsettings"));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomH", "Auto Use R on High Priorities").SetValue(true));
-            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomM", "Auto Use R on Medium Priorities").SetValue(true));
-           // Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomL", "Auto Use R on Low Priorities").SetValue(false));
-            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(true));
- 
+            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomM", "Auto Use R on Midium Priorities").SetValue(true));
+            Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(new StringList(new[] { "Always", "Only Combo", "No" }, 0)));
+            // Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(true));
+
 
             //Misc
             Menu.AddSubMenu(new Menu("Misc", "Misc"));
 
- 
-    
+
+
             Menu.SubMenu("Misc").AddItem(new MenuItem("Packets", "Packet Casting").SetValue(false));
 
             //Drawings
@@ -98,13 +114,12 @@ namespace Teemo___Satan_Yordle
             Menu.SubMenu("Drawing").AddItem(new MenuItem("DrawQCD", "Q Cooldown").SetValue(new Circle(false, Color.DarkRed)));
             Menu.SubMenu("Drawing").AddItem(new MenuItem("DrawR", "R Range").SetValue(new Circle(false, Color.Green)));
             Menu.SubMenu("Drawing").AddItem(new MenuItem("DrawRCD", "R Cooldown").SetValue(new Circle(false, Color.DarkRed)));
-            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomH", "Shroom High Priorities").SetValue(true));
-            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomM", "Shroom Medium Priorities").SetValue(true));
-           
-            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomV", "Shroom Vision Range").SetValue(new Slider(1500, 2500, 1000)));
+            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomH1", "Shroom High Priorities").SetValue(true));
+            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomM1", "Shroom Midium Priorities").SetValue(true));
+            Menu.SubMenu("Drawing").AddItem(new MenuItem("ShroomV", "Shroom Vision Range").SetValue(new Slider(1500, 4000, 1000)));
 
 
-        
+
 
             Menu.AddToMainMenu();
 
@@ -112,12 +127,12 @@ namespace Teemo___Satan_Yordle
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnGameUpdate += Game_OnGameUpdate;
 
-            Game.PrintChat("<font color=\"#33CC00\">Teemo</font> - Satan Yordle v" + VersionE + " .By <font color=\"#0066FF\">E2Slayer</font>");
+            Game.PrintChat("<font color=\"#33CC00\">Teemo</font> - Satan Yordle v" + VersionE + " By <font color=\"#0066FF\">E2Slayer</font>");
 
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
 
             ShroomPositions = new ShroomTables();
-          
+
 
         }
 
@@ -161,21 +176,28 @@ namespace Teemo___Satan_Yordle
                 Utility.DrawCircle(Player.Position, R.Range, Menu.Item("DrawRCD").GetValue<Circle>().Color);
             }
 
-            if (!Menu.Item("ShroomOn").GetValue<bool>())
-                return;
+            //  if (!ShroomOnC2) return;//Shroom drawing check
+            // I think it isn't necessary. It was stopping drawing the shroom when player turn off Auto R
+
 
             // Shroom Drawing , Made by : LXMedia1 in UltimateCarry2
-            if (Menu.Item("ShroomH").GetValue<bool>())
+            // Fixed Drawing Shroom On/Off 
+
+            if (Menu.Item("ShroomH1").GetValue<bool>())
+            {
                 foreach (
                     var pos in
                         ShroomPositions.HighPriority.Where(
                             shrom =>
-                                shrom.Distance(ObjectManager.Player.Position)  <=
+                                shrom.Distance(ObjectManager.Player.Position) <=
                                 Menu.Item("ShroomV").GetValue<Slider>().Value))
                 {
                     Utility.DrawCircle(pos, 50, Color.Red);
                 }
-            if (Menu.Item("ShroomM").GetValue<bool>())
+            }
+
+            if (Menu.Item("ShroomM1").GetValue<bool>())
+            {
                 foreach (
                     var pos in
                         ShroomPositions.MediumPriority.Where(
@@ -185,8 +207,9 @@ namespace Teemo___Satan_Yordle
                 {
                     Utility.DrawCircle(pos, 50, Color.Yellow);
                 }
+            }
 
-      
+
 
         } // Drawing End
 
@@ -195,65 +218,110 @@ namespace Teemo___Satan_Yordle
          * GameUpdate
          ========================
          */
-                private static void Game_OnGameUpdate (EventArgs args)
+        private static void Game_OnGameUpdate(EventArgs args)
+        {
+            var ShroomOnC = Menu.Item("ShroomOn").GetValue<StringList>().SelectedIndex;
+            if (Player.IsDead)
+                return;
+
+            if (ShroomOnC == 0) // 0 is Shroom Auto On
             {
-                if (Player.IsDead)
-                    return;
-
-                  if (Menu.Item("ShroomOn").GetValue<bool>())
-                    {
-                        AutoR();
-                    }
+                AutoR();
+            }
 
 
 
-                    if (Menu.Item("ComboActive").GetValue<KeyBind>().Active)
-                {
-                    Combo();
-                }
-
-
-                else if (Menu.Item("HarassActive").GetValue<KeyBind>().Active ||
-                         Menu.Item("HarassActiveT").GetValue<KeyBind>().Active)
-                {
-                    Harass();
-                }
-
+            if (Menu.Item("ComboActive").GetValue<KeyBind>().Active)
+            {
+                Combo();
 
             }
 
 
-     /* 
-       ========================
-       * R Auto 
-      * Made by : LXMedia1 in UltimateCarry2
-       ========================
-       */
+            else if (Menu.Item("HarassActive").GetValue<KeyBind>().Active ||
+                     Menu.Item("HarassActiveT").GetValue<KeyBind>().Active)
+            {
+                Harass();
+            }
+
+
+        }
+
+
+        /* 
+          ========================
+          * R Auto 
+         * Made by : LXMedia1 in UltimateCarry2
+          ========================
+          */
         private static void AutoR()
         {
             var PacketE = Menu.Item("Packets").GetValue<bool>();
-            if (!R.IsReady())
-                return;
+
             if (Menu.Item("ShroomH").GetValue<bool>())
                 foreach (var place in ShroomPositions.HighPriority.Where(pos => pos.Distance(ObjectManager.Player.Position) <= R.Range && !IsShroomed(pos)))
                     R.Cast(place, PacketE);
             if (Menu.Item("ShroomM").GetValue<bool>())
                 foreach (var place in ShroomPositions.MediumPriority.Where(pos => pos.Distance(ObjectManager.Player.Position) <= R.Range && !IsShroomed(pos)))
                     R.Cast(place, PacketE);
-       
+
         }
 
-            /* 
-       ========================
-       * AA reset
-       ========================
-       */
-        private static void Orbwalking_AfterAttack (Obj_AI_Base unit, Obj_AI_Base target)
+
+        private static void ItemUse()
+        {
+
+            var TG = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+
+            if (TG == null) return;
+
+            if (DFG.IsReady() && Menu.Item("DFG1").GetValue<bool>())
             {
-                var ComA = Menu.Item("ComboActive").GetValue<KeyBind>().Active;
-                var HarA = Menu.Item("HarassActive").GetValue<KeyBind>().Active;
-                var HarAT = Menu.Item("HarassActiveT").GetValue<KeyBind>().Active;
-                var PacketE = Menu.Item("Packets").GetValue<bool>();
+
+                DFG.Cast(TG);
+            }
+            if (Cutlass.IsReady() && Menu.Item("Cutlass1").GetValue<bool>())
+            {
+                Cutlass.Cast(TG);
+            }
+            if (Hextech.IsReady() && Menu.Item("Hextech1").GetValue<bool>())
+            {
+
+                Hextech.Cast(TG);
+            }
+            if (Frostclaim.IsReady() && Menu.Item("Frostclaim1").GetValue<bool>())
+            {
+
+                Frostclaim.Cast(TG);
+            }
+            if (Botrk.IsReady() && Menu.Item("Botrk1").GetValue<bool>())
+            {
+
+                Botrk.Cast(TG);
+            }
+            if (Youmuus.IsReady() && Menu.Item("Youmuus1").GetValue<bool>())
+            {
+
+                Youmuus.Cast();
+            }
+
+        }
+
+
+
+        /* 
+             
+          
+   ========================
+   * AA reset
+   ========================
+   */
+        private static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
+        {
+            var ComA = Menu.Item("ComboActive").GetValue<KeyBind>().Active;
+            var HarA = Menu.Item("HarassActive").GetValue<KeyBind>().Active;
+            var HarAT = Menu.Item("HarassActiveT").GetValue<KeyBind>().Active;
+            var PacketE = Menu.Item("Packets").GetValue<bool>();
 
 
             if ((ComA || HarA || HarAT) && unit.IsMe && (target is Obj_AI_Hero))
@@ -266,25 +334,32 @@ namespace Teemo___Satan_Yordle
 
                 else if (Menu.Item("UseQH").GetValue<bool>() && (HarA || HarAT) && Q.IsReady())
                 {
-                    if (Player.Mana/Player.MaxMana*100 < Menu.Item("HarassMana").GetValue<Slider>().Value) return;
+                    if (Player.Mana / Player.MaxMana * 100 < Menu.Item("HarassMana").GetValue<Slider>().Value) return;
                     Q.Cast(target, PacketE);
                 }
             }
-            
 
-            }
 
-            /* 
-        ========================
-        * Combo / Harass
-        ========================
-        */
+        }
+
+        /* 
+    ========================
+    * Combo / Harass
+    ========================
+    */
         private static void Combo()
-            {
-                var TG = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
-                var PacketE = Menu.Item("Packets").GetValue<bool>();
-                var TGW = SimpleTs.GetTarget(Orbwalking.GetRealAutoAttackRange(ObjectManager.Player) + 150, SimpleTs.DamageType.Physical);
-                if (TG == null) return;
+        {
+            var TG = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+            var PacketE = Menu.Item("Packets").GetValue<bool>();
+            var TGW = SimpleTs.GetTarget(Orbwalking.GetRealAutoAttackRange(ObjectManager.Player) + 150, SimpleTs.DamageType.Physical);
+
+
+            AutoR();
+
+            if (TG == null) return;
+
+
+            ItemUse();
 
             if (Menu.Item("UseW").GetValue<bool>() && R.IsReady())
             {
@@ -293,20 +368,20 @@ namespace Teemo___Satan_Yordle
             }
 
             if (Menu.Item("UseR").GetValue<bool>() && R.IsReady())
-            { 
-                    if (TG.IsValidTarget(R.Range))
-                        R.Cast(TG.Position, PacketE);
+            {
+                if (TG.IsValidTarget(R.Range))
+                    R.Cast(TG.Position, PacketE);
             }
 
-            }
+        }
 
         private static void Harass()
-            {
-               var TG = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
-               var TGW = SimpleTs.GetTarget(Orbwalking.GetRealAutoAttackRange(ObjectManager.Player) + 150, SimpleTs.DamageType.Physical);
-                var PacketE = Menu.Item("Packets").GetValue<bool>();
+        {
+            var TG = SimpleTs.GetTarget(Q.Range, SimpleTs.DamageType.Physical);
+            var TGW = SimpleTs.GetTarget(Orbwalking.GetRealAutoAttackRange(ObjectManager.Player) + 150, SimpleTs.DamageType.Physical);
+            var PacketE = Menu.Item("Packets").GetValue<bool>();
 
-                if (Player.Mana/Player.MaxMana*100 < Menu.Item("HarassMana").GetValue<Slider>().Value) return;
+            if (Player.Mana / Player.MaxMana * 100 < Menu.Item("HarassMana").GetValue<Slider>().Value) return;
 
             if (Menu.Item("UseWH").GetValue<bool>() && R.IsReady())
             {
@@ -316,7 +391,7 @@ namespace Teemo___Satan_Yordle
 
 
 
-            }
+        }
 
 
         /* 
@@ -336,7 +411,7 @@ namespace Teemo___Satan_Yordle
         {
             public List<Vector3> HighPriority = new List<Vector3>();
             public List<Vector3> MediumPriority = new List<Vector3>();
-         
+
 
             public ShroomTables()
             {
@@ -354,7 +429,7 @@ namespace Teemo___Satan_Yordle
                             select new Vector3(x, z, y)).ToList();
                 MediumPriority = templist;
 
-         
+
             }
 
             /* 
@@ -371,9 +446,9 @@ namespace Teemo___Satan_Yordle
                 HighPriority.Add(new Vector3(10032, 49.70721f, 6610));
                 HighPriority.Add(new Vector3(8580, -50.36785f, 5560));
                 HighPriority.Add(new Vector3(11960, 52.09994f, 7400));
-                HighPriority.Add(new Vector3(4804 , 40.283f, 8334));
+                HighPriority.Add(new Vector3(4804, 40.283f, 8334));
                 HighPriority.Add(new Vector3(6264, -62.41959f, 9332));
-                HighPriority.Add(new Vector3(4724 , -71.2406f, 10024));
+                HighPriority.Add(new Vector3(4724, -71.2406f, 10024));
                 HighPriority.Add(new Vector3(3636, -8.188844f, 9348));
                 HighPriority.Add(new Vector3(4452, 56.8484f, 11810));
                 HighPriority.Add(new Vector3(2848, 51.84816f, 7362));
@@ -398,13 +473,13 @@ namespace Teemo___Satan_Yordle
                 MediumPriority.Add(new Vector3(4778, 52.83177f, 7654));
                 MediumPriority.Add(new Vector3(2212, 50.37255f, 7548));
                 MediumPriority.Add(new Vector3(3272, 51.84087f, 7152));
-                MediumPriority.Add(new Vector3(2304 , 53.16499f, 9716));
-                MediumPriority.Add(new Vector3(3944 , -22.74386f, 11382));
-                MediumPriority.Add(new Vector3(2794 , 21.37915f, 11938));
+                MediumPriority.Add(new Vector3(2304, 53.16499f, 9716));
+                MediumPriority.Add(new Vector3(3944, -22.74386f, 11382));
+                MediumPriority.Add(new Vector3(2794, 21.37915f, 11938));
                 MediumPriority.Add(new Vector3(2978, -70.66211f, 11060));
                 MediumPriority.Add(new Vector3(7056, 52.86944f, 9068));
                 MediumPriority.Add(new Vector3(6208, 54.84456f, 10086));
-                MediumPriority.Add(new Vector3(8264 , 49.92609f, 10242));
+                MediumPriority.Add(new Vector3(8264, 49.92609f, 10242));
                 MediumPriority.Add(new Vector3(7304, 56.4768f, 12466));
                 MediumPriority.Add(new Vector3(9310, 53.27245f, 11322));
 
@@ -416,7 +491,7 @@ namespace Teemo___Satan_Yordle
             }
         }
 
-       
+
 
 
 
