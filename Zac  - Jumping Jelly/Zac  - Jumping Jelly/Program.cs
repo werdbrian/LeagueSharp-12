@@ -41,7 +41,7 @@ namespace Zac____Jumping_Jelly
             R = new Spell(SpellSlot.R, 300); // In objectmanger said "850", but I don't know why 850. I changed to 300
 
             Q.SetSkillshot(0.5f, 120f, 902, true, SkillshotType.SkillshotLine);
-            E.SetCharged("ZacE", "ZacE", 0, 1550, 1.5f);
+          //  E.SetCharged("ZacE", "ZacE", 0, 1550, 1.5f);
 
              // W.SetSkillshot(0.5f, 350, 1600, true); // I don't think It is neccesarry
             // R.SetSkillshot(0.5f, 1800, 1800, true, SkillshotType.SkillshotCone);
