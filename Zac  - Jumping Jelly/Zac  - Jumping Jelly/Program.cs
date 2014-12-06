@@ -16,7 +16,7 @@ namespace Zac____Jumping_Jelly
         public static Orbwalking.Orbwalker Orbwalker;
         public static Spell Q, W, E, R;
 
-        public static Items.Item DFG, Botrk, Frostclaim, Youmuus, Hextech, Cutlass;
+        public static Items.Item DFG;
 
 
         public static Menu Menu;
@@ -37,7 +37,7 @@ namespace Zac____Jumping_Jelly
 
             Q = new Spell(SpellSlot.Q, 550);
             W = new Spell(SpellSlot.W, 350);
-            E = new Spell(SpellSlot.E, 1550);
+            E = new Spell(SpellSlot.E, 1150);
             R = new Spell(SpellSlot.R, 300); // In objectmanger said "850", but I don't know why 850. I changed to 300
 
             Q.SetSkillshot(0.5f, 120f, 902, true, SkillshotType.SkillshotLine);
