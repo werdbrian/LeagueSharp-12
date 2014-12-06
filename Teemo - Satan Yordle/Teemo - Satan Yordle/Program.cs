@@ -112,7 +112,7 @@ namespace Teemo___Satan_Yordle
                 Emotes.AddItem(new MenuItem("Type", "Spam Type").SetValue(new StringList(new[] { "Laugh", "Taunt", "Joke", "Off" }, 3)));
                 Emotes.AddItem(new MenuItem("EmotePress", "EmoteSpam")).SetValue(new KeyBind(32, KeyBindType.Press));
          
-                Emotes.AddItem(new MenuItem("EmoteD", "Spam Delay")).SetValue(new Slider(100, 1000, 1));
+                
 
 
                 Misc.AddSubMenu(Emotes);
