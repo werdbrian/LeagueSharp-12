@@ -22,11 +22,13 @@ namespace Teemo___Satan_Yordle
         private static Items.Item DFG, Botrk, Frostclaim, Youmuus, Hextech, Cutlass;
 
 
-        private static Menu Menu;
+        public static Menu Menu;
+
+
 
         private static ShroomTables ShroomPositions;
 
-        public const string VersionE = "1.0.1";
+        public const string VersionE = "1.0.2";
 
         static void Main(string[] args)
         {
@@ -46,13 +48,14 @@ namespace Teemo___Satan_Yordle
 
             Q.SetTargetted(0f, 2000f);
             R.SetSkillshot(0.1f, 75f, float.MaxValue, false, SkillshotType.SkillshotCircle);
-            //  DFG = Utility.Map.GetMap()._MapType == Utility.Map.MapType.TwistedTreeline ? new Items.Item(3188, 750) : new Items.Item(3128, 750);
+          
             DFG = new Items.Item(3128, 750);
             Cutlass = new Items.Item(3144, 450);
             Hextech = new Items.Item(3146, 700);
             Frostclaim = new Items.Item(3092, 850);
             Botrk = new Items.Item(3153, 450);
             Youmuus = new Items.Item(3142, 650);
+
 
 
             //Base menu
@@ -98,15 +101,31 @@ namespace Teemo___Satan_Yordle
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomH", "Auto Use R on High Priorities").SetValue(true));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomM", "Auto Use R on Midium Priorities").SetValue(true));
             Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(new StringList(new[] { "Always", "Only Combo", "No" }, 0)));
-            // Menu.SubMenu("Rsettings").AddItem(new MenuItem("ShroomOn", "Auto Use R").SetValue(true));
-
-
-            //Misc
-            Menu.AddSubMenu(new Menu("Misc", "Misc"));
 
 
 
-            Menu.SubMenu("Misc").AddItem(new MenuItem("Packets", "Packet Casting").SetValue(false));
+            var Misc = new Menu("Misc", "Misc");
+            Misc.AddItem(new MenuItem("Packets", "Packet Casting").SetValue(false));
+            Misc.AddItem(new MenuItem("GapQ", "Use Q for Gap Closer").SetValue(true));
+            {
+                var Emotes = new Menu("EmoteSpammer", "EmoteSpammer");
+                Emotes.AddItem(new MenuItem("Type", "Spam Type").SetValue(new StringList(new[] { "Laugh", "Taunt", "Joke", "Off" }, 3)));
+                Emotes.AddItem(new MenuItem("EmotePress", "EmoteSpam")).SetValue(new KeyBind(32, KeyBindType.Press));
+         
+                Emotes.AddItem(new MenuItem("EmoteD", "Spam Delay")).SetValue(new Slider(100, 1000, 1));
+
+
+                Misc.AddSubMenu(Emotes);
+
+
+
+            }
+
+            Menu.AddSubMenu(Misc);
+
+
+
+
 
             //Drawings
             Menu.AddSubMenu(new Menu("Drawings", "Drawing"));
@@ -126,6 +145,10 @@ namespace Teemo___Satan_Yordle
 
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnGameUpdate += Game_OnGameUpdate;
+            AntiGapcloser.OnEnemyGapcloser += AntiGapcloser_OnEnemyGapcloser;
+
+          
+
 
             Game.PrintChat("<font color=\"#33CC00\">Teemo</font> - Satan Yordle v" + VersionE + " By <font color=\"#0066FF\">E2Slayer</font>");
 
@@ -138,12 +161,13 @@ namespace Teemo___Satan_Yordle
 
 
 
-
         /* 
          ========================
          * Drawing Part 
          ========================
          */
+
+
 
         private static void Drawing_OnDraw(EventArgs args)
         {
@@ -221,6 +245,7 @@ namespace Teemo___Satan_Yordle
         private static void Game_OnGameUpdate(EventArgs args)
         {
             var ShroomOnC = Menu.Item("ShroomOn").GetValue<StringList>().SelectedIndex;
+            var TypeC = Menu.Item("Type").GetValue<StringList>().SelectedIndex;
             if (Player.IsDead)
                 return;
 
@@ -245,8 +270,51 @@ namespace Teemo___Satan_Yordle
             }
 
 
+
+            if (TypeC == 3) return;
+
+            // spammer
+           
+            if (ObjectManager.Player.HasBuff("Recall")) return;
+
+
+            {
+                if ((Menu.Item("EmotePress").GetValue<KeyBind>().Active))
+                {
+                    SPAM();
+                }
+               
+            }
         }
 
+
+        /* 
+       ========================
+       * Emote Spammer  
+      * Made by : TheKushStyle
+         * github.com/TheKushStyle/LeagueSharp/tree/master/EmoteSpammer
+       ========================
+       */
+        private static void SPAM()
+        {
+            var TypeC = Menu.Item("Type").GetValue<StringList>().SelectedIndex;
+
+            if (TypeC == 0)
+            {
+                Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(2)).Send();
+               
+            }
+            else if (TypeC == 1)
+            {
+                Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(1)).Send();
+             
+            }
+            else if (TypeC == 2)
+            {
+                Packet.C2S.Emote.Encoded(new Packet.C2S.Emote.Struct(3)).Send();
+      
+            }
+        }
 
         /* 
           ========================
@@ -267,7 +335,34 @@ namespace Teemo___Satan_Yordle
 
         }
 
+        /* 
+       ========================
+       * Use Q to Gap-Closer
+      * Probably needs some improvements, keep working
+       ========================
+       */
 
+        private static void AntiGapcloser_OnEnemyGapcloser(ActiveGapcloser gapcloser)
+        {
+            var PacketE = Menu.Item("Packets").GetValue<bool>();
+
+
+            if (!Menu.Item("GapQ").GetValue<bool>()) return;
+
+            if (Q.IsReady() && gapcloser.Sender.IsValidTarget(Q.Range))//&& Player.Distance(gapcloser.Sender, true) <= 500 
+            {
+
+                Q.Cast(gapcloser.Sender, PacketE);
+
+            }
+        }
+
+        /* 
+       ========================
+       * Item Usage 
+      * Item code from Kurisu's source
+       ========================
+       */
         private static void ItemUse()
         {
 
@@ -357,7 +452,6 @@ namespace Teemo___Satan_Yordle
             AutoR();
 
             if (TG == null) return;
-
 
             ItemUse();
 
