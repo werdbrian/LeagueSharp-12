@@ -117,7 +117,7 @@ namespace Zac____Jumping_Jelly
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnGameUpdate += Game_OnGameUpdate;
 
-            Drawing.OnDraw += a =>
+          
 
             //   Game.OnGameSendPacket += PacketHandler; //for emote delay
             //  Drawing.OnEndScene += Drawing_OnEndScene;
