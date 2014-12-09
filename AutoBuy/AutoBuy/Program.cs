@@ -215,7 +215,7 @@ namespace AutoBuy
             {
                 if (Buyc == 0 && HasSmite == 1 && Menu.Item("AutobuySmite").GetValue<bool>())
                 {
-                    Game.PrintChat("You have Smite !");
+                   // Game.PrintChat("You have Smite !");
                     Buyc = 1;
                     Player.BuyItem(ItemId.Hunters_Machete);
                     Player.BuyItem(ItemId.Health_Potion);
@@ -484,7 +484,7 @@ namespace AutoBuy
             {
                 smiteSlot = spell.Slot;
                 smite = new Spell(smiteSlot, 700);
-                Game.PrintChat("Has Smite !");
+              //  Game.PrintChat("Has Smite !");
                 HasSmite = 1;
                 return;
             }
