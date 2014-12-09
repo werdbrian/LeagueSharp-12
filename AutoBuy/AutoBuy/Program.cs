@@ -22,12 +22,6 @@ namespace AutoBuy
 
         static void Main(string[] args)
         {
-            if (Game.ClockTime > 150) // about 2:05 
-            {
-               // Game.PrintChat("<font color=\"#C11B17\">Auto Buy Starting Items</font> is Unloaded (Time is over 2:00)"); // Don't need it I think.
-                return;
-            }
-             
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
             
         }
@@ -190,6 +184,13 @@ namespace AutoBuy
             var championName2 = ObjectManager.Player.ChampionName.ToLowerInvariant();
             if (Player.IsDead)
                 return;
+
+            if (Game.ClockTime > 150) // about 2:05 
+            {
+                 //Game.PrintChat("<font color=\"#C11B17\">Auto Buy Starting Items</font> is Unloaded (Time is over 2:00)"); // Don't need it I think.
+                return;
+            }
+             
 
             if (Menu.Item("Autobuyon" + championName2).GetValue<bool>())
             {
