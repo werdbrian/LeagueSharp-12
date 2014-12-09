@@ -36,8 +36,8 @@ namespace AutoBuy
             Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item1" + championName2, "ItemSlot 1").SetValue(new StringList(new[] { "Doran's Blade", "Doran's Ring", "Doran's Shield", "Crystalline Flask", "Hunter's Machete", "Cloth Armor"/*5*/, "Boots of Speed", "Long Sword", "Ancient Coin", "Relic Shield", "Spellthief's Edge"/*10*/, "Dagger", "Brawler's Gloves", "Amplifying Tome", "Sapphire Crystal", "Faerie Charm"/*15*/, "Rejuvenation Bead", "OFF" }, Value1)));
     
             Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item2" + championName2, "ItemSlot 2").SetValue(new StringList(new[] { "Faerie Charm", "Rejuvenation Bead", "OFF" }, Value2)));
-            Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item3" + championName2, "Health Postions").SetValue(new Slider(Value3, 0, 5)));
-            Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item4" + championName2, "Mana Postions").SetValue(new Slider(Value4, 0, 5)));
+            Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item3" + championName2, "Health Potions").SetValue(new Slider(Value3, 0, 5)));
+            Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item4" + championName2, "Mana Potions").SetValue(new Slider(Value4, 0, 5)));
             Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item5" + championName2, "Wards").SetValue(new Slider(Value5, 0, 3)));
             Menu.SubMenu("Autobuy").AddItem(new MenuItem("Item6" + championName2, "Vision Wards").SetValue(new Slider(Value6, 0, 2)));
             if (championName2 != "rengar")
