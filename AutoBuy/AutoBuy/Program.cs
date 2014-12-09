@@ -15,10 +15,15 @@ namespace AutoBuy
     {
         public static Menu Menu;
         private static Obj_AI_Hero Player { get { return ObjectManager.Player; } }
-        public static int Buyc = 0, Buyc2 = 0;
+        public static int Buyc = 0, Buyc2 = 0; //buyc is For Global setting, buyc2 is different settings for each champ
         public static int Value1 = 17, Value2 = 2, Value3 = 0, Value4 = 0, Value5 = 0, Value6 = 0, ValueT = 3, ValueTR = 3;
-        public static int Setting1, Setting2, Setting3, Setting4, Setting5, Setting6, SettingT, SettingTR;
-        public const string VersionE = "1.0.0";
+        public static int HasSmite = 0;
+        public static int Setting1, Setting2, Setting3, Setting4, Setting5, Setting6, SettingT, SettingTR, GSetting;
+        public const string VersionE = "1.0.1";
+
+        public static SpellSlot smiteSlot = SpellSlot.Unknown;
+        public static Spell smite;
+        //public static Spell champSpell;
 
         static void Main(string[] args)
         {
@@ -51,7 +56,18 @@ namespace AutoBuy
                 SettingTR = Menu.Item("TrinketbR" + championName2).GetValue<StringList>().SelectedIndex; // For Rengar because he has special trinkets. 
                 }
 
-            Menu.SubMenu("Autobuy").AddItem(new MenuItem("Autobuyon" + championName2, "Auto Buy On").SetValue(true));
+
+            Menu.AddSubMenu(new Menu("Global Settings", "Globals"));
+
+            Menu.SubMenu("Globals").AddItem(new MenuItem("AutobuyG1", "Auto Buy Settings").SetValue(new StringList(new[] { "Always", "Only After Press Key", "OFF" }, 0)));
+            Menu.SubMenu("Globals").AddItem(new MenuItem("AutobuyA", "Auto Buy Active").SetValue(new KeyBind(32, KeyBindType.Press)));
+        //    Menu.SubMenu("Autobuy").AddItem(new MenuItem("Autobuyon" + championName2, "Auto Buy On").SetValue(true));
+            Menu.SubMenu("Globals").AddItem(new MenuItem("AutobuySmite", "Auto Buy Machete if Player has Smite").SetValue(false));
+            Menu.SubMenu("Globals").AddItem(new MenuItem("AutobuyTW", "Always Buy Warding Totem(Yellow) For Starting Item").SetValue(false));
+
+
+
+
 
             Setting1 = Menu.Item("Item1" + championName2).GetValue<StringList>().SelectedIndex;
             Setting2 = Menu.Item("Item2" + championName2).GetValue<StringList>().SelectedIndex;
@@ -59,6 +75,8 @@ namespace AutoBuy
             Setting4 = Menu.Item("Item4" + championName2).GetValue<Slider>().Value;
             Setting5 = Menu.Item("Item5" + championName2).GetValue<Slider>().Value;
             Setting6 = Menu.Item("Item6" + championName2).GetValue<Slider>().Value;
+
+            GSetting = Menu.Item("AutobuyG1").GetValue<StringList>().SelectedIndex;
             
            Buyc2 = 1;
        
@@ -73,7 +91,7 @@ namespace AutoBuy
             Menu = new Menu("Auto Buy Starting Items", "Autobuy", true);
             //    var championName = Player.ChampionName.ToLowerInvariant();
             var championName = Player.ChampionName;
-
+            setSmiteSlot();
             switch (championName) // I brought this list from Maskmans (Legacy). 
             {
                 case "Ashe":
@@ -190,19 +208,34 @@ namespace AutoBuy
                  //Game.PrintChat("<font color=\"#C11B17\">Auto Buy Starting Items</font> is Unloaded (Time is over 2:00)"); // Don't need it I think.
                 return;
             }
-             
 
-            if (Menu.Item("Autobuyon" + championName2).GetValue<bool>())
+
+
+            if (GSetting == 0 || (GSetting == 1 && Menu.Item("AutobuyA").GetValue<KeyBind>().Active))
             {
+                if (Buyc == 0 && HasSmite == 1 && Menu.Item("AutobuySmite").GetValue<bool>())
+                {
+                    Game.PrintChat("You have Smite !");
+                    Buyc = 1;
+                    Player.BuyItem(ItemId.Hunters_Machete);
+                    Player.BuyItem(ItemId.Health_Potion);
+                    Player.BuyItem(ItemId.Health_Potion);
+                    TrinketC();
 
+                    // return;
+                }
+            }
+            if (!Menu.Item("AutobuySmite").GetValue<bool>())
+            {
+                TrinketC();
+                if (GSetting == 0 || (GSetting == 1 && Menu.Item("AutobuyA").GetValue<KeyBind>().Active))
+            {
+               
                 if (Buyc2 == 1 && Player.Level == 1 && Utility.InShopRange() &&
                     Game.ClockTime < 150)
                 {
 
-                   
-                    
-                        //   { "Doran's Blade", "Doran's Ring", "Doran's Shield", "Crystalline Flask", "Hunter's Machete", "Cloth Armor"/*5*/, "Boots of Speed", "Long Sword", "Ancient Coin", "Relic Shield", "Spellthief's Edge"/*10*/, "Dagger", "Brawler's Gloves", "Amplifying Tome", "Sapphire Crystal", "Faerie Charm"/*15*/, "Rejuvenation Bead", "OFF" }, 17)));
-
+                    //   { "Doran's Blade", "Doran's Ring", "Doran's Shield", "Crystalline Flask", "Hunter's Machete", "Cloth Armor"/*5*/, "Boots of Speed", "Long Sword", "Ancient Coin", "Relic Shield", "Spellthief's Edge"/*10*/, "Dagger", "Brawler's Gloves", "Amplifying Tome", "Sapphire Crystal", "Faerie Charm"/*15*/, "Rejuvenation Bead", "OFF" }, 17)));
 
                     if (Buyc2 == 1)
                     {
@@ -213,108 +246,108 @@ namespace AutoBuy
                             case 0:
                             {
                                 Player.BuyItem(ItemId.Dorans_Blade);
-                                 
+
                             }
                                 break;
                             case 1:
                             {
                                 Player.BuyItem(ItemId.Dorans_Ring);
-                                 
+
                             }
                                 break;
                             case 2:
                             {
                                 Player.BuyItem(ItemId.Dorans_Shield);
-                                 
+
                             }
                                 break;
                             case 3:
                             {
                                 Player.BuyItem(ItemId.Crystalline_Flask);
-                                 
+
                             }
                                 break;
                             case 4:
                             {
                                 Player.BuyItem(ItemId.Hunters_Machete);
-                                 
+
                             }
                                 break;
                             case 5:
                             {
                                 Player.BuyItem(ItemId.Cloth_Armor);
-                                 
+
                             }
                                 break;
                             case 6:
                             {
                                 Player.BuyItem(ItemId.Boots_of_Speed);
-                                 
+
                             }
                                 break;
                             case 7:
                             {
                                 Player.BuyItem(ItemId.Long_Sword);
-                                 
+
                             }
                                 break;
                             case 8:
                             {
                                 Player.BuyItem(ItemId.Ancient_Coin);
-                                 
+
                             }
                                 break;
                             case 9:
                             {
                                 Player.BuyItem(ItemId.Relic_Shield);
-                                 
+
                             }
                                 break;
                             case 10:
                             {
                                 Player.BuyItem(ItemId.Spellthiefs_Edge);
-                                 
+
                             }
                                 break;
                             case 11:
                             {
                                 Player.BuyItem(ItemId.Dagger);
-                                 
+
                             }
                                 break;
                             case 12:
                             {
                                 Player.BuyItem(ItemId.Brawlers_Gloves);
-                                 
+
                             }
                                 break;
                             case 13:
                             {
                                 Player.BuyItem(ItemId.Amplifying_Tome);
-                                 
+
                             }
                                 break;
                             case 14:
                             {
                                 Player.BuyItem(ItemId.Sapphire_Crystal);
-                                 
+
                             }
                                 break;
                             case 15:
                             {
                                 Player.BuyItem(ItemId.Faerie_Charm);
-                                 
+
                             }
                                 break;
                             case 16:
                             {
                                 Player.BuyItem(ItemId.Rejuvenation_Bead);
-                                 
+
                             }
                                 break;
                             case 17:
                             {
-                                 
+
                             }
                                 break;
 
@@ -326,18 +359,18 @@ namespace AutoBuy
                             case 0:
                             {
                                 Player.BuyItem(ItemId.Faerie_Charm);
-                     
+
                             }
                                 break;
                             case 1:
                             {
                                 Player.BuyItem(ItemId.Rejuvenation_Bead);
-                                
+
                             }
                                 break;
                             case 2:
                             {
-                                
+
                             }
                                 break;
                         }
@@ -378,27 +411,27 @@ namespace AutoBuy
                             switch (SettingT)
                             {
                                 case 0:
-                                    {
-                                        Player.BuyItem(ItemId.Warding_Totem_Trinket);
+                                {
+                                    Player.BuyItem(ItemId.Warding_Totem_Trinket);
 
-                                    }
+                                }
                                     break;
                                 case 1:
-                                    {
-                                        Player.BuyItem(ItemId.Sweeping_Lens_Trinket);
+                                {
+                                    Player.BuyItem(ItemId.Sweeping_Lens_Trinket);
 
-                                    }
+                                }
                                     break;
                                 case 2:
-                                    {
-                                        Player.BuyItem(ItemId.Scrying_Orb_Trinket);
+                                {
+                                    Player.BuyItem(ItemId.Scrying_Orb_Trinket);
 
-                                    }
+                                }
                                     break;
                                 case 3:
-                                    {
+                                {
 
-                                    }
+                                }
                                     break;
                             }
                         }
@@ -408,41 +441,85 @@ namespace AutoBuy
                             switch (SettingTR)
                             {
                                 case 0:
-                                    {
-                                        Player.BuyItem(ItemId.Bonetooth_Necklace);
+                                {
+                                    Player.BuyItem(ItemId.Bonetooth_Necklace);
 
-                                    }
+                                }
                                     break;
                                 case 1:
-                                    {
-                                        Player.BuyItem(ItemId.Bonetooth_Necklace_3405);
+                                {
+                                    Player.BuyItem(ItemId.Bonetooth_Necklace_3405);
 
-                                    }
+                                }
                                     break;
                                 case 2:
-                                    {
-                                        Player.BuyItem(ItemId.Bonetooth_Necklace_3411);
+                                {
+                                    Player.BuyItem(ItemId.Bonetooth_Necklace_3411);
 
-                                    }
+                                }
                                     break;
                                 case 3:
-                                    {
+                                {
 
-                                    }
+                                }
                                     break;
                             }
                         }
 
-             
+
 
                     }
-
                 }
+
+            }
 
             }
 
         }
 
+
+        public static void setSmiteSlot()  // made by metaphorce
+        {
+            foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells.Where(spell => String.Equals(spell.Name, "summonersmite", StringComparison.CurrentCultureIgnoreCase)))
+            {
+                smiteSlot = spell.Slot;
+                smite = new Spell(smiteSlot, 700);
+                Game.PrintChat("Has Smite !");
+                HasSmite = 1;
+                return;
+            }
+        }
+
+
+        public static void TrinketC()  
+        {
+            var championName2 = ObjectManager.Player.ChampionName.ToLowerInvariant();
+            if (Menu.Item("AutobuyTW").GetValue<bool>())
+            {
+            //    Player.BuyItem(ItemId.Bonetooth_Necklace);
+            //        Player.BuyItem(ItemId.Warding_Totem_Trinket);
+
+                    if (championName2 != "rengar")
+                    {
+                       
+                                    Player.BuyItem(ItemId.Warding_Totem_Trinket);
+
+                
+                    }
+
+                    else if (championName2 == "rengar")
+                    {
+                        
+                                    Player.BuyItem(ItemId.Bonetooth_Necklace);
+
+                    }
+                
+
+                
+                
+            }
+        }
+   
    
 
         
