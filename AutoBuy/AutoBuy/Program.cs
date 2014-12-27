@@ -212,7 +212,7 @@ namespace AutoBuy
 
             if (GSetting == 0)
             {
-                Utility.DelayAction.Add(3000, () =>
+                Utility.DelayAction.Add(2000, () =>
                 {
                     Autobuy1();
                 });
