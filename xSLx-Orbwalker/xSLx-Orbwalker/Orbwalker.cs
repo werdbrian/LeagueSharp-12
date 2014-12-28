@@ -609,10 +609,10 @@ namespace xSLx_Orbwalker
 				hitsToKill = killHits;
 				killableEnemy = enemy;
 			}
-			return hitsToKill <= 3 ? killableEnemy : SimpleTs.GetTarget(GetAutoAttackRange(), SimpleTs.DamageType.Physical);
+            return hitsToKill <= 3 ? killableEnemy : TargetSelector.GetTarget(GetAutoAttackRange(), TargetSelector.DamageType.Physical);
 		}
 
-		public static double CountKillhits(Obj_AI_Base enemy)
+        public static double CountKillhits(Obj_AI_Base enemy)
 		{
 			return enemy.Health / MyHero.GetAutoAttackDamage(enemy);
 		}

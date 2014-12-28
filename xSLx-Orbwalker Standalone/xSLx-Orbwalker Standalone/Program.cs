@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using LeagueSharp;
 using LeagueSharp.Common;
 using xSLx_Orbwalker;
-using xSLx_TargetSelector;
 
 namespace xSLx_Orbwalker_Standalone
 {
@@ -19,7 +18,7 @@ namespace xSLx_Orbwalker_Standalone
 
         public static void Game_OnGameLoad(EventArgs args)
         {
-            Game.PrintChat("<font color='#FF0000'>xSLx Orbwalker standalone</font> loaded. - <font color='#5882FA'>E2Slayer</font>");
+            Game.PrintChat("<font color=\"#33CC00\">xSLx Orbwalker standalone</font> loaded. - By <font color=\"#0066FF\">E2Slayer</font>");
 
             //xSLxOrbwalker Load part
             var menu = new Menu("xSLx Orbwalker", "my_mainmenu", true);
@@ -31,7 +30,7 @@ namespace xSLx_Orbwalker_Standalone
 
             //xSLxActivator Load part
             var targetselectormenu = new Menu("TargetSelector", "Common_TargetSelector");
-            SimpleTs.AddToMenu(targetselectormenu);
+            TargetSelector.AddToMenu(targetselectormenu);
             menu.AddSubMenu(targetselectormenu);
         }
     }
