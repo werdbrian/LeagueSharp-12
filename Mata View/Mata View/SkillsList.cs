@@ -58,7 +58,7 @@ namespace Mata_View
             public static Getobj IsObj(string skillname)
             {
                 var checkenemy = Menus.Menu.Item("enemyskill").GetValue<bool>() && skillname.ToLower().Contains("red");
-                var checkally = Menus.Menu.Item("allyskill").GetValue<bool>() && skillname.ToLower().Contains("blue");
+                var checkally = Menus.Menu.Item("allyskill").GetValue<bool>() && (skillname.ToLower().Contains("blue") || skillname.ToLower().Contains("green"));
 
                 foreach (var proobj in SkillList0.Where(proobj1 => (skillname.ToLower().Contains(proobj1.Name.ToLower()))))
                 {
