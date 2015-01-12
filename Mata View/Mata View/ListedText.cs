@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Linq;
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
@@ -20,11 +21,13 @@ namespace Mata_View
         public Vector3 Position;
         public float CreatedAt;
         public static GameObject SenderN;
+        public int RealtimeCheck;
+        public Obj_AI_Hero Heroname;
 
         public bool Visible = true;
 
         public Render.Text Timer { get; set; }
-        public ListedText(int netId, string name, float duration, Vector3 position, float createdAt, GameObject senderN)
+        public ListedText(int netId, string name, float duration, Vector3 position, float createdAt, GameObject senderN, int realtimecheck, Obj_AI_Hero heroname)
         {
             NetworkId = netId;
             Name = name;
@@ -33,6 +36,8 @@ namespace Mata_View
             CreatedAt = createdAt;
 
             SenderN = senderN;
+            RealtimeCheck = realtimecheck;
+            Heroname = heroname;
 
             Timer = new Render.Text("", new Vector2(0, 0), (Menus.testsize.GetValue<Slider>().Value) * 2, SharpDX.Color.White)
             {
@@ -42,6 +47,21 @@ namespace Mata_View
                 PositionUpdate = delegate
                 {
                     var pos = Drawing.WorldToScreen(new Vector3(Position.X, Position.Y, Position.Z));
+                    switch (RealtimeCheck)
+                    {
+                        case 0: //Object First Created Posistion
+
+                            break;
+                        case 1: //Realtime on Hero Position
+                            Position = Heroname.Position;
+                            Position.Y += 80f; // I don't know why it needs, but if I don't add posistion it won't draw timer
+                            break;
+                        case 2: //Realtime on Sender Position
+                            Position = SenderN.Position;
+                            Position.Y += 40f;
+                            break;
+
+                    }
                     return pos;
                 },
                 TextUpdate = () => ((CreatedAt + Duration) - Game.Time).ToString("0.0"),
@@ -50,5 +70,10 @@ namespace Mata_View
             };
             Timer.Add();
         }
+
+       
     }
+
+   
+    
 }
