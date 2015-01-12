@@ -31,8 +31,8 @@ namespace Mata_View
 
             var textmenu = (new Menu("Text Configs", "Text Configs"));
             testsize = (new MenuItem("textsize", "Text Size").SetValue(new Slider(16, 30, 10)));
-            var textcolorenemy = (new MenuItem("textcolorenemy", "Ally Color").SetValue(Color.White));
-            var textcolorally = (new MenuItem("textcolorally", "Enemy Color").SetValue(Color.White));
+           // var textcolorenemy = (new MenuItem("textcolorenemy", "Ally Color").SetValue(Color.White));
+          //  var textcolorally = (new MenuItem("textcolorally", "Enemy Color").SetValue(Color.White));
 
             var enemylist = new Menu("Enemy Timer", "enemylist");
             var allylist = new Menu("Ally Timer", "allylist");
@@ -45,8 +45,8 @@ namespace Mata_View
 
             Menu.AddSubMenu(textmenu);
             Menu.SubMenu("Text Configs").AddItem(testsize);
-            Menu.SubMenu("Text Configs").AddItem(textcolorenemy);
-            Menu.SubMenu("Text Configs").AddItem(textcolorally);
+          //  Menu.SubMenu("Text Configs").AddItem(textcolorenemy);
+          //  Menu.SubMenu("Text Configs").AddItem(textcolorally);
 
   
             Skill = new Menu("Skill Timer", "Skill Timer", true);
