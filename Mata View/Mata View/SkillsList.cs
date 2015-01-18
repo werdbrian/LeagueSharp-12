@@ -43,6 +43,7 @@ namespace Mata_View
             {
                 //Realtime check 0: off / 1 : Hero Posistion / 2 : Sender Position
                 SkillList0.Add(new Getobj("UndyingRage_glow.troy", 5f, 1, "Tryndamere", "Tryndamere R"));
+                SkillList0.Add(new Getobj("MonkeyKing_Base_R_Cas.troy", 4f, 1, "MonkeyKing", "Wukong R"));
                 SkillList0.Add(new Getobj("nickoftime_tar.troy", 7f, 1, "Zilean", "Zilean R")); // zillean Ult
 
 
@@ -50,12 +51,12 @@ namespace Mata_View
                 SkillList0.Add(new Getobj("Lissandra_Base_R_ring_", 1.5f, 1, "Lissandra", "Lissandra R")); //because of checking self-ult
                 SkillList0.Add(new Getobj("Lissandra_Base_R_iceblock.troy", 2.5f, 0, "Lissandra", "Lissandra Self-R"));
 
-              // SkillList0.Add(new Getobj("eyeforaneye_self.troy", 3f, 1, "Kayle", "Kayle R"));
+               SkillList0.Add(new Getobj("eyeforaneye", 2f, 1, "Kayle", "Kayle R"));
 
                SkillList0.Add(new Getobj("Karthus_Base_R_Target.troy", 3f, 1, "Karthus", "Karthus R(Target)"));
                SkillList0.Add(new Getobj("Karthus_Base_R_Cas.troy", 3f, 0, "Karthus", "Karthus R"));
 
-               SkillList0.Add(new Getobj("MasterYi_Base_W_Buf.troy", 5f, 0, "MasterYi", "MasterYi W"));
+               SkillList0.Add(new Getobj("MasterYi_Base_W_Buf.troy", 4f, 0, "MasterYi", "MasterYi W"));
 
                SkillList0.Add(new Getobj("ShenTeleport_v2.troy", 3f, 0, "Shen" , "Shen R"));
 
@@ -66,9 +67,7 @@ namespace Mata_View
                SkillList0.Add(new Getobj("EggTimer.troy", 6f, 1, "Anivia", "Anivia Egg"));
                SkillList0.Add(new Getobj("Passive_Death_Activate.troy", 3f, 1, "Aatrox", "Aatrox Passive"));
 
-          //     SkillList0.Add(new Getobj("eyeforaneye_", 2f, 1));
-
-
+               SkillList0.Add(new Getobj("InfiniteDuress_tar.troy", 1.8f, 1, "Warwick", "Warwick R"));
 
 
 
@@ -89,7 +88,6 @@ namespace Mata_View
    
 
                SkillList0.Add(new Getobj("Karthus_Base_W_Post", 5f, 0, "Karthus", "Karthus W"));
-              // SkillList0.Add(new Getobj("Karthus_Base_W_Wall", 5f, 0, "Karthus", "Karthus W"));
                 SkillList0.Add(new Getobj("Thresh_Base_Lantern_cas_", 6f, 0, "Thresh","Thresh W"));
                 SkillList0.Add(new Getobj("Viktor_Catalyst_", 4f, 0,"Viktor","Viktor W"));
                 SkillList0.Add(new Getobj("pirate_cannonBarrage_aoe_indicator_", 7f, 0, "Gangplank", "Gangplank R"));
