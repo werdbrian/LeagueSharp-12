@@ -265,7 +265,7 @@ namespace AutoBuy
                 if (GSetting == 0 || (GSetting == 1 && Menu.Item("AutobuyA").GetValue<KeyBind>().Active))
                 {
 
-                    if (Buyc2 == 1 && Player.Level == 1 && Utility.InShopRange() && Game.ClockTime < 150)
+                    if (Buyc2 == 1 && Player.Level == 1 && Player.InShop() && Game.ClockTime < 150)
                     {
 
                         //   { "Doran's Blade", "Doran's Ring", "Doran's Shield", "Crystalline Flask", "Hunter's Machete", "Cloth Armor"/*5*/, "Boots of Speed", "Long Sword", "Ancient Coin", "Relic Shield", "Spellthief's Edge"/*10*/, "Dagger", "Brawler's Gloves", "Amplifying Tome", "Sapphire Crystal", "Faerie Charm"/*15*/, "Rejuvenation Bead", "OFF" }, 17)));
