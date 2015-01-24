@@ -69,6 +69,11 @@ namespace Mata_View
 
                SkillList0.Add(new Getobj("InfiniteDuress_tar.troy", 1.8f, 1, "Warwick", "Warwick R"));
 
+               SkillList0.Add(new Getobj("DiplomaticImmunity_buf.troy", 7f, 1, "Poppy", "Poppy R"));
+               SkillList0.Add(new Getobj("olaf_ragnorok_", 6f, 1, "Olaf", "Olaf R"));
+
+               SkillList0.Add(new Getobj("Morgana_base_R_Indicator_Ring.troy", 3f, 1, "Morgana", "Morgana R"));
+
 
 
                SkillList0.Add(new Getobj("w_windwall_enemy", 4f, 2, "Yasuo", "Yasuo W")); //yasuo Yasuo_Skin02_w_windwall_enemy_02.troy 
@@ -85,8 +90,9 @@ namespace Mata_View
 
                SkillList0.Add(new Getobj("zhonyas_ring_activate.troy", 2.5f, 1, "Misc", "Zhonya Hourglass"));
                SkillList0.Add(new Getobj("LifeAura.troy", 3f, 2, "Misc", "Guardian Angel / Zilean Revive"));
-   
 
+               SkillList0.Add(new Getobj("AbsoluteZero2_", 3f, 0, "Nunu", "Nunu R"));
+               SkillList0.Add(new Getobj("kennen_ss_aoe_", 3f, 1, "Kennen", "Kennen R"));
                SkillList0.Add(new Getobj("Karthus_Base_W_Post", 5f, 0, "Karthus", "Karthus W"));
                 SkillList0.Add(new Getobj("Thresh_Base_Lantern_cas_", 6f, 0, "Thresh","Thresh W"));
                 SkillList0.Add(new Getobj("Viktor_Catalyst_", 4f, 0,"Viktor","Viktor W"));
