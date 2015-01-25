@@ -26,7 +26,7 @@ namespace Mata_View
 
         private static void Game_OnGameLoad(EventArgs args)
         {
-            Chat("1.1.1.1 [Beta]");
+            Chat("1.1.1.3 [Jan, 25]");
             Menus.Menuadd();
             DetectObj.DetectObjload();
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Mata_View
     internal class DetectObj
     {
         public static List<ListedText> AllSkills = new List<ListedText>();
-      
+
 
         public static bool PanthD, KayleUlt;
         public static float KayleDuration;
@@ -29,152 +30,133 @@ namespace Mata_View
         public static void DetectObjload()
         {
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpell;
-            
+
             GameObject.OnCreate += OnCreateObject;
             GameObject.OnDelete += OnDeleteObject;
         }
 
-    
 
 
- 
 
-        public static void OnProcessSpell(Obj_AI_Base obj, GameObjectProcessSpellCastEventArgs arg)
+
+
+        private static void OnProcessSpell(Obj_AI_Base obj, GameObjectProcessSpellCastEventArgs arg)
         {
-            if (!Menus.Menu.Item("activeskill").GetValue<bool>())
+            if (obj == null || arg == null || obj.Name.Contains("Turret") || obj.Name.Contains("Minion") ||
+                !Menus.Menu.Item("activeskill").GetValue<bool>())
                 return;
-            if (obj.Name.Contains("Turret") || obj.Name.Contains("Minion"))
-                 return;
 
+            FakeObjCreate(obj, arg);
+
+        }
+
+        private static void FakeObjCreate(Obj_AI_Base obj, GameObjectProcessSpellCastEventArgs arg)
+        {
             if (arg.SData.Name.Contains("JudicatorIntervention"))
             {
                 if (Menus.Menu.Item("eyeforaneye").GetValue<bool>())
                 {
-                    switch (obj.Spellbook.GetSpell(SpellSlot.R).Level)
-                    {
-                        case 0:
-                            return;
-                            break;
-                        case 1:
-                            KayleDuration = 2f;
-                            break;
-                        case 2:
-                            KayleDuration = 2.5f;
-                            break;
-                        case 3:
-                            KayleDuration = 3f;
-                            break;
-                    }
+                    if (obj.Spellbook.GetSpell(SpellSlot.R).Level == 0)
+                        return;
+                    var level = (int) obj.Spellbook.GetSpell(SpellSlot.R).Level;
+                    KayleDuration = 2f + (level - 1) * 0.5f;
                     KayleUlt = true;
                 }
             }
 
             if (arg.SData.Name.Contains("ZhonyasHourglass"))
             {
-                if (Menus.Menu.SubMenu("misclist").Item("zhonyas_ring_activate.troy").GetValue<bool>() &&
-                    Menus.Menu.Item("activeMisc").GetValue<bool>())
+                if (Menus.Menu.Item("activeMisc").GetValue<bool>())
                 {
-                    var ho = SkillsList.IsObj("zhonyas_ring_activate.troy");
-                    if (ho == null) return;
-
-                    var misccheck = SkillsList.IsMisc("zhonyas_ring_activate.troy");
-                    if (misccheck != null) return;
-
-                    var sender = new GameObject();
-                    foreach (
-                        var hero in
-                            ObjectManager.Get<Obj_AI_Hero>()
-                                .Where(d => obj.BaseSkinName == d.BaseSkinName))
-                    {
-                        AllSkills.Add(new ListedText(999999998, "zhonyas_ring_activate.troy", ho.Duration,
-                            hero.Position, Game.Time, sender, ho.Realtime, hero));
-                    }
+                    FakeCreateLogic(obj, "zhonyas_ring_activate.troy", 999999998, false, "zhonyas_ring_activate.troy");
                 }
             }
 
             if (arg.SData.Name.Contains("KarthusFallenOne"))
             {
-                if (Menus.Menu.Item("Karthus_Base_R_Cas.troy").GetValue<bool>())
-                {
-                    var ho = SkillsList.IsObj("Karthus_Base_R_Cas.troy");
-                    if (ho == null) return;
-
-                    var misccheck = SkillsList.IsMisc("Karthus_Base_R_Cas.troy");
-                    if (misccheck != null) return;
-
-                    var sender = new GameObject();
-                    foreach (
-                        var hero in
-                            ObjectManager.Get<Obj_AI_Hero>()
-                                .Where(d => obj.BaseSkinName == d.BaseSkinName))
-                    {
-                        AllSkills.Add(new ListedText(999999997, "Karthus_Base_R_Cas.troy", ho.Duration,
-                            hero.Position, Game.Time, sender, ho.Realtime, hero));
-                    }
-                }
+                FakeCreateLogic(obj, "Karthus_Base_R_Cas.troy", 999999997, false, "Karthus_Base_R_Cas.troy");
             }
 
             if (arg.SData.Name.Contains("infiniteduresschannel"))
             {
-                if (Menus.Menu.Item("InfiniteDuress_tar.troy").GetValue<bool>())
-                {
-                    var ho = SkillsList.IsObj("InfiniteDuress_tar.troy");
-                    if (ho == null) return;
-
-                    var misccheck = SkillsList.IsMisc("InfiniteDuress_tar.troy");
-                    if (misccheck != null) return;
-
-                    var sender = new GameObject();
-                    foreach (
-                        var hero in
-                            ObjectManager.Get<Obj_AI_Hero>()
-                                .Where(d => obj.BaseSkinName == d.BaseSkinName))
-                    {
-                        AllSkills.Add(new ListedText(999999996, "InfiniteDuress_", ho.Duration,
-                            hero.Position, Game.Time, sender, ho.Realtime, hero));
-                    }
-                }
+                FakeCreateLogic(obj, "InfiniteDuress_tar.troy", 999999996, true, "InfiniteDuress_");
             }
-
-
-            /*
-            if (arg.SData.Name.Contains("TalonShadowAssault"))
-            {
-                Talon = true;
-                var ho = SkillsList.IsObj("talon_ult_sound.troy");
-                var sender = new GameObject();
-                var hero = new Obj_AI_Hero();
-                AllSkills.Add(new ListedText(999999997, "talon_ult_sound.troy", ho.Duration,
-                        obj.Position, Game.Time, sender, ho.Realtime, hero));
-            }*/ // talon is kind of buggy
 
             if (arg.SData.Name.Contains("PantheonRJump"))
                 PanthD = true;
 
-     
+            /*
+            if (arg.SData.Name.Contains("TalonShadowAssault"))
+            {
+               FakeCreateLogic(obj, "talon_ult_sound.troy", 999999996, false, "talon_ult_sound.troy");
+            }*/
+            // talon is kind of buggy
+
+
+
+        }
+
+        private static void FakeCreateLogic(Obj_AI_Base obj,
+            string createname,
+            int fakeNetId,
+            bool namecheck,
+            string changname)
+        {
+            if (!Menus.Menu.Item(createname).GetValue<bool>())
+                return;
+            var ho = SkillsList.IsObj(createname);
+            if (ho == null)
+                return;
+
+            var misccheck = SkillsList.IsMisc(createname);
+            if (misccheck != null)
+                return;
+
+            if (namecheck)
+                createname = changname;
+
+            var sender = new GameObject();
+            foreach (var hero in
+                ObjectManager.Get<Obj_AI_Hero>().Where(d => obj.BaseSkinName == d.BaseSkinName))
+            {
+                AllSkills.Add(
+                    new ListedText(
+                        fakeNetId, createname, ho.Duration, hero.Position, Game.Time, sender, ho.Realtime, hero));
+            }
         }
 
         private static void OnCreateObject(GameObject sender, EventArgs args)
         {
-            if (!Menus.Menu.Item("activeskill").GetValue<bool>())
+
+            // obj_AI_Minion can't type to "ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>", so it throw error.
+            if (sender == null || args == null || sender.Type != GameObjectType.obj_GeneralParticleEmmiter ||
+                !Menus.Menu.Item("activeskill").GetValue<bool>())
                 return;
-            if (sender.Name.Contains("missile") || sender.Name.Contains("Minion") || sender.Name.Contains("InfiniteDuress_tar"))
+            if (sender.Name.Contains("missile") || sender.Name.Contains("Minion") ||
+                sender.Name.Contains("InfiniteDuress_tar") || sender.Name.Contains("teleport_arrive") ||
+                sender.Name.Contains("teleport_flash"))
                 return;
 
-            var ho = SkillsList.IsObj((ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>(sender.NetworkId)).Name);
-            if (ho == null) return;
-           
-            var misccheck = SkillsList.IsMisc((ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>(sender.NetworkId)).Name);
-            if (misccheck != null) return;
-            
- 
+
+            var ho =
+                SkillsList.IsObj((ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>(sender.NetworkId)).Name);
+            if (ho == null)
+                return;
+
+            var misccheck =
+                SkillsList.IsMisc((ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>(sender.NetworkId)).Name);
+            if (misccheck != null)
+                return;
+
+
 
             {
                 switch (ho.Realtime)
                 {
-                        case 0: //Object First Created Posistion
+                    case 0: //Object First Created Posistion
                         var r1 = DivideRealTime.RealTimeDivide(sender, 1);
-                        if (r1 == null) return;
+                        if (r1 == null)
+                            return;
                         if (PanthD)
                         {
                             ho.Duration = 2.5f;
@@ -182,11 +164,12 @@ namespace Mata_View
                         }
                         break;
                     case 1: //Realtime on Hero Position / Don't need to check Hero.isenemy
-                       var r2 = DivideRealTime.RealTimeDivide(sender, 2);
-                        if (r2 == null) return;
+                        var r2 = DivideRealTime.RealTimeDivide(sender, 2);
+                        if (r2 == null)
+                            return;
                         if (KayleUlt)
                         {
-                            if (!Menus.Menu.Item("eyeforaneye").GetValue<bool>()) 
+                            if (!Menus.Menu.Item("eyeforaneye").GetValue<bool>())
                                 return;
                             ho.Duration = KayleDuration;
                             KayleUlt = false;
@@ -194,27 +177,42 @@ namespace Mata_View
                         break;
                     case 2: //Realtime on Sender Position
                         var r3 = DivideRealTime.RealTimeDivide(sender, 1);
-                        if (r3 == null) return;
+                        if (r3 == null)
+                            return;
                         break;
-                   
+
                 }
-                AllSkills.Add(new ListedText(sender.NetworkId, sender.Name, ho.Duration, sender.Position, Game.Time, sender, ho.Realtime, Heropos));
+                AllSkills.Add(
+                    new ListedText(
+                        sender.NetworkId, sender.Name, ho.Duration, sender.Position, Game.Time, sender, ho.Realtime,
+                        Heropos));
             }
         }
-         
 
-        private static
-            void OnDeleteObject(GameObject sender, EventArgs args)
+
+
+
+
+
+        private static void OnDeleteObject(GameObject sender, EventArgs args)
         {
-            if (!Menus.Menu.Item("activeskill").GetValue<bool>())
+            if (sender == null || args == null || sender.Type != GameObjectType.obj_GeneralParticleEmmiter ||
+                sender.Name.Contains("missile") || sender.Name.Contains("Minion") ||
+                !Menus.Menu.Item("activeskill").GetValue<bool>())
                 return;
-            foreach (var deleteobj in AllSkills.Where(w => w.NetworkId == sender.NetworkId || w.Name == sender.Name ))
+
+            //InvalidOperationException is fixed 
+            foreach (
+                var deleteobj in
+                    new List<ListedText>(AllSkills).Where(w => w.NetworkId == sender.NetworkId || w.Name == sender.Name)
+                )
             {
                 deleteobj.Visible = false;
                 AllSkills.Remove(deleteobj);
             }
-
         }
 
     }
+
 }
+
