@@ -1,16 +1,9 @@
 ﻿#region
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using LeagueSharp;
-using LeagueSharp.Common;
 using SharpDX;
-using Color = System.Drawing.Color;
 
 #endregion
 
@@ -30,7 +23,7 @@ namespace Mata_View
                             herof = hero;
                             break;
                         }
-                    
+              
                         break;
                              case 2:
                         foreach (
@@ -66,10 +59,7 @@ namespace Mata_View
                                     DetectObj.Heropos = herof;
                                     return skill;
                                 }
-                                else
-                                {
-                                    return null;
-                                }
+                                return null;
                             }
             return null;
         }

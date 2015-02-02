@@ -2,15 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using LeagueSharp;
-using LeagueSharp.Common;
-using SharpDX;
-using Color = System.Drawing.Color;
 
 #endregion
 
@@ -37,7 +30,6 @@ namespace Mata_View
     public class SkillsList
     {
             public static List<Getobj> SkillList0 = new List<Getobj>();
-            public static float Panthtimer = 1.5f;
 
             static SkillsList()
             {
@@ -73,6 +65,7 @@ namespace Mata_View
                SkillList0.Add(new Getobj("olaf_ragnorok_", 6f, 1, "Olaf", "Olaf R"));
 
                SkillList0.Add(new Getobj("Morgana_base_R_Indicator_Ring.troy", 3f, 1, "Morgana", "Morgana R"));
+               SkillList0.Add(new Getobj("Malzahar_Base_R_tar.troy", 2.5f, 0, "Malzahar", "Malzahar R"));
              //  SkillList0.Add(new Getobj("Crowstorm_", 5f, 1, "FiddleSticks", "FiddleSticks R"));
 
 
@@ -90,15 +83,16 @@ namespace Mata_View
 
                SkillList0.Add(new Getobj("zhonyas_ring_activate.troy", 2.5f, 1, "Misc", "Zhonya Hourglass"));
                SkillList0.Add(new Getobj("LifeAura.troy", 3f, 2, "Misc", "Guardian Angel / Zilean Revive"));
-              SkillList0.Add(new Getobj("global_ss_teleport_", 3.5f, 0, "Misc", "Teleport"));
+               SkillList0.Add(new Getobj("global_ss_teleport_", 3.5f, 0, "Misc", "Teleport"));
  
-               SkillList0.Add(new Getobj("AbsoluteZero2_", 3f, 0, "Nunu", "Nunu R"));
-               SkillList0.Add(new Getobj("kennen_ss_aoe_", 3f, 1, "Kennen", "Kennen R"));
-               SkillList0.Add(new Getobj("Karthus_Base_W_Post", 5f, 0, "Karthus", "Karthus W"));
+                SkillList0.Add(new Getobj("galio_beguilingStatue_taunt_indicator_team_", 2f, 0, "Galio", "Galio R"));
+                SkillList0.Add(new Getobj("AbsoluteZero2_", 3f, 0, "Nunu", "Nunu R"));
+                SkillList0.Add(new Getobj("kennen_ss_aoe_", 3f, 1, "Kennen", "Kennen R"));
+                SkillList0.Add(new Getobj("Karthus_Base_W_Post", 5f, 0, "Karthus", "Karthus W"));
                 SkillList0.Add(new Getobj("Thresh_Base_Lantern_cas_", 6f, 0, "Thresh","Thresh W"));
                 SkillList0.Add(new Getobj("Viktor_Catalyst_", 4f, 0,"Viktor","Viktor W"));
                 SkillList0.Add(new Getobj("pirate_cannonBarrage_aoe_indicator_", 7f, 0, "Gangplank", "Gangplank R"));
-                SkillList0.Add(new Getobj("Jinx_E_Mine_Ready_", 4.5f, 0, "Jinx", "Jinx E"));
+                SkillList0.Add(new Getobj("Jinx_Base_E_Mine_Ready_", 4.5f, 0, "Jinx", "Jinx E"));
                 SkillList0.Add(new Getobj("Zyra_R_cast_", 2f, 0, "Zyra", "Zyra R"));
                 SkillList0.Add(new Getobj("Veigar_Base_W_cas_", 1.2f, 0, "Veigar", "Veigar W"));
                 SkillList0.Add(new Getobj("Veigar_Base_E_cage_", 3f, 0, "Veigar", "Veigar E"));
@@ -118,10 +112,7 @@ namespace Mata_View
                         return proobj;
                     if (checkally)
                         return proobj;
-                    else
-                    {
-                        return proobj;
-                    }
+                    return proobj;
                 }
                 return null;
             }
@@ -135,10 +126,7 @@ namespace Mata_View
                     {
                         return null;
                     }
-                    else
-                    {
-                        return misc;
-                    }
+                    return misc;
                 }
                 return null;
             }

@@ -1,6 +1,6 @@
 ﻿#region
 
-using System.Linq;
+using System;
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
@@ -42,7 +42,7 @@ namespace Mata_View
             Timer = new Render.Text("", new Vector2(0, 0), (Menus.testsize.GetValue<Slider>().Value) * 2, SharpDX.Color.White)
             {
                 VisibleCondition =
-                condition => (((Duration == -1 || (int)((CreatedAt + Duration + 1) - Game.Time) > 0) && (duration) > 0 && Visible)),
+                condition => (((Math.Abs(Duration - (-1)) < 0 || (int)((CreatedAt + Duration + 1) - Game.Time) > 0) && (duration) > 0 && Visible)),
                  
                 PositionUpdate = delegate
                 {

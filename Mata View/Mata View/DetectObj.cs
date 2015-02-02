@@ -2,16 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
+
 using LeagueSharp;
-using LeagueSharp.Common;
-using SharpDX;
-using Color = System.Drawing.Color;
+
 
 #endregion
 
@@ -19,11 +13,11 @@ namespace Mata_View
 {
     internal class DetectObj
     {
-        public static List<ListedText> AllSkills = new List<ListedText>();
+        private static readonly List<ListedText> AllSkills = new List<ListedText>();
 
 
-        public static bool PanthD, KayleUlt;
-        public static float KayleDuration;
+        private static bool _panthD, _kayleUlt;
+        private static float _kayleDuration;
         public static Obj_AI_Hero Heropos = new Obj_AI_Hero();
 
 
@@ -35,11 +29,6 @@ namespace Mata_View
             GameObject.OnDelete += OnDeleteObject;
         }
 
-
-
-
-
-
         private static void OnProcessSpell(Obj_AI_Base obj, GameObjectProcessSpellCastEventArgs arg)
         {
             if (obj == null || arg == null || obj.Name.Contains("Turret") || obj.Name.Contains("Minion") ||
@@ -47,6 +36,7 @@ namespace Mata_View
                 return;
 
             FakeObjCreate(obj, arg);
+           
 
         }
 
@@ -58,9 +48,9 @@ namespace Mata_View
                 {
                     if (obj.Spellbook.GetSpell(SpellSlot.R).Level == 0)
                         return;
-                    var level = (int) obj.Spellbook.GetSpell(SpellSlot.R).Level;
-                    KayleDuration = 2f + (level - 1) * 0.5f;
-                    KayleUlt = true;
+                    var level = obj.Spellbook.GetSpell(SpellSlot.R).Level;
+                    _kayleDuration = 2f + (level - 1) * 0.5f;
+                    _kayleUlt = true;
                 }
             }
 
@@ -83,7 +73,7 @@ namespace Mata_View
             }
 
             if (arg.SData.Name.Contains("PantheonRJump"))
-                PanthD = true;
+                _panthD = true;
 
             /*
             if (arg.SData.Name.Contains("TalonShadowAssault"))
@@ -125,6 +115,7 @@ namespace Mata_View
             }
         }
 
+    
         private static void OnCreateObject(GameObject sender, EventArgs args)
         {
 
@@ -136,7 +127,6 @@ namespace Mata_View
                 sender.Name.Contains("InfiniteDuress_tar") || sender.Name.Contains("teleport_arrive") ||
                 sender.Name.Contains("teleport_flash"))
                 return;
-
 
             var ho =
                 SkillsList.IsObj((ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>(sender.NetworkId)).Name);
@@ -157,22 +147,22 @@ namespace Mata_View
                         var r1 = DivideRealTime.RealTimeDivide(sender, 1);
                         if (r1 == null)
                             return;
-                        if (PanthD)
+                        if (_panthD)
                         {
                             ho.Duration = 2.5f;
-                            PanthD = false;
+                            _panthD = false;
                         }
                         break;
                     case 1: //Realtime on Hero Position / Don't need to check Hero.isenemy
                         var r2 = DivideRealTime.RealTimeDivide(sender, 2);
                         if (r2 == null)
                             return;
-                        if (KayleUlt)
+                        if (_kayleUlt)
                         {
                             if (!Menus.Menu.Item("eyeforaneye").GetValue<bool>())
                                 return;
-                            ho.Duration = KayleDuration;
-                            KayleUlt = false;
+                            ho.Duration = _kayleDuration;
+                            _kayleUlt = false;
                         }
                         break;
                     case 2: //Realtime on Sender Position
