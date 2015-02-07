@@ -72,6 +72,11 @@ namespace Mata_View
                 FakeCreateLogic(obj, "InfiniteDuress_tar.troy", 999999996, true, "InfiniteDuress_");
             }
 
+            if (arg.SData.Name.Contains("summonerexhaust"))
+            {
+                FakeCreateLogic(obj, "Global_ss_exhaust.troy", 999999995, false, "Global_ss_exhaust.troy");
+            }
+
             if (arg.SData.Name.Contains("PantheonRJump"))
                 _panthD = true;
 
@@ -89,7 +94,7 @@ namespace Mata_View
         private static void FakeCreateLogic(Obj_AI_Base obj,
             string createname,
             int fakeNetId,
-            bool namecheck,
+            bool namecheck, 
             string changname)
         {
             if (!Menus.Menu.Item(createname).GetValue<bool>())

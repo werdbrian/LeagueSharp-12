@@ -66,6 +66,9 @@ namespace Mata_View
 
                SkillList0.Add(new Getobj("Morgana_base_R_Indicator_Ring.troy", 3f, 1, "Morgana", "Morgana R"));
                SkillList0.Add(new Getobj("Malzahar_Base_R_tar.troy", 2.5f, 0, "Malzahar", "Malzahar R"));
+               SkillList0.Add(new Getobj("Velkoz_Base_R_Beam_Eye.troy", 2.5f, 1, "Velkoz", "Velkoz R"));
+               SkillList0.Add(new Getobj("Sion_Base_R_Cas.troy", 8f, 1, "Sion", "Sion R"));
+               SkillList0.Add(new Getobj("Zac_R_tar.troy", 5f, 1, "Zac", "Zac R"));
              //  SkillList0.Add(new Getobj("Crowstorm_", 5f, 1, "FiddleSticks", "FiddleSticks R"));
 
 
