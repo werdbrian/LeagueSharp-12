@@ -17,6 +17,7 @@ namespace Mata_View
 
 
         private static bool _panthD, _kayleUlt;
+        private static bool _revive = false;
         private static float _kayleDuration;
         public static Obj_AI_Hero Heropos = new Obj_AI_Hero();
 
@@ -70,11 +71,6 @@ namespace Mata_View
             if (arg.SData.Name.Contains("infiniteduresschannel"))
             {
                 FakeCreateLogic(obj, "InfiniteDuress_tar.troy", 999999996, true, "InfiniteDuress_");
-            }
-
-            if (arg.SData.Name.Contains("summonerexhaust"))
-            {
-                FakeCreateLogic(obj, "Global_ss_exhaust.troy", 999999995, false, "Global_ss_exhaust.troy");
             }
 
             if (arg.SData.Name.Contains("PantheonRJump"))
@@ -142,9 +138,8 @@ namespace Mata_View
                 SkillsList.IsMisc((ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>(sender.NetworkId)).Name);
             if (misccheck != null)
                 return;
-
-
-
+            if (sender.Name == "nickoftime_tar.troy")
+                _revive = true;
             {
                 switch (ho.Realtime)
                 {
@@ -174,6 +169,13 @@ namespace Mata_View
                         var r3 = DivideRealTime.RealTimeDivide(sender, 1);
                         if (r3 == null)
                             return;
+                        if (_revive)
+                        {
+                            ho.Duration = 3.0f;
+                            _revive = false;
+                        }
+                        else if (_revive == false && sender.Name == "LifeAura.troy")
+                            ho.Duration = 4.0f;
                         break;
 
                 }
