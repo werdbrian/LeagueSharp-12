@@ -51,6 +51,7 @@ namespace Mata_View
                SkillList0.Add(new Getobj("MasterYi_Base_W_Buf.troy", 4f, 0, "MasterYi", "MasterYi W"));
 
                SkillList0.Add(new Getobj("ShenTeleport_v2.troy", 3f, 0, "Shen" , "Shen R"));
+               
 
 
 
@@ -69,6 +70,7 @@ namespace Mata_View
                SkillList0.Add(new Getobj("Velkoz_Base_R_Beam_Eye.troy", 2.5f, 1, "Velkoz", "Velkoz R"));
                SkillList0.Add(new Getobj("Sion_Base_R_Cas.troy", 8f, 1, "Sion", "Sion R"));
                SkillList0.Add(new Getobj("Zac_R_tar.troy", 5f, 1, "Zac", "Zac R"));
+               SkillList0.Add(new Getobj("dr_mundo_heal.troy", 12f, 1, "DrMundo", "Mundo R"));
              //  SkillList0.Add(new Getobj("Crowstorm_", 5f, 1, "FiddleSticks", "FiddleSticks R"));
 
 
@@ -101,6 +103,7 @@ namespace Mata_View
                 SkillList0.Add(new Getobj("Veigar_Base_E_cage_", 3f, 0, "Veigar", "Veigar E"));
                 SkillList0.Add(new Getobj("akali_smoke_bomb_tar_team_", 8f, 0, "Akali", "Akali W"));
                 SkillList0.Add(new Getobj("Pantheon_Base_R_indicator_", 1.5f, 0, "Pantheon", "Pantheon R")); // Visible = 2.5f / Invisible = 1.5f
+                SkillList0.Add(new Getobj("ReapTheWhirlwind_", 3f, 0, "Janna", "Janna R"));
             }
 
             public static Getobj IsObj(string skillname)
@@ -133,6 +136,7 @@ namespace Mata_View
                 }
                 return null;
             }
+
     }
 
 

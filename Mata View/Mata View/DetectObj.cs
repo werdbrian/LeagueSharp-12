@@ -73,6 +73,11 @@ namespace Mata_View
                 FakeCreateLogic(obj, "InfiniteDuress_tar.troy", 999999996, true, "InfiniteDuress_");
             }
 
+            if (arg.SData.Name.Contains("Sadism"))
+            {
+                FakeCreateLogic(obj, "dr_mundo_heal.troy", 999999995, false, "dr_mundo_heal.troy");
+            }
+
             if (arg.SData.Name.Contains("PantheonRJump"))
                 _panthD = true;
 
@@ -87,7 +92,7 @@ namespace Mata_View
 
         }
 
-        private static void FakeCreateLogic(Obj_AI_Base obj,
+        public static void FakeCreateLogic(Obj_AI_Base obj,
             string createname,
             int fakeNetId,
             bool namecheck, 
