@@ -89,7 +89,9 @@ namespace Mata_View
                SkillList0.Add(new Getobj("zhonyas_ring_activate.troy", 2.5f, 1, "Misc", "Zhonya Hourglass"));
                SkillList0.Add(new Getobj("LifeAura.troy", 4f, 2, "Misc", "Guardian Angel / Zilean Revive"));
                SkillList0.Add(new Getobj("global_ss_teleport_", 3.5f, 0, "Misc", "Teleport"));
- 
+
+               SkillList0.Add(new Getobj("Bard_Base_E_Door.troy", 10f, 0, "Bard", "Bard E"));
+               SkillList0.Add(new Getobj("Bard_Base_R_stasis_skin_", 2.5f, 0, "Bard", "Bard R"));
                 SkillList0.Add(new Getobj("galio_beguilingStatue_taunt_indicator_team_", 2f, 0, "Galio", "Galio R"));
                 SkillList0.Add(new Getobj("AbsoluteZero2_", 3f, 0, "Nunu", "Nunu R"));
                 SkillList0.Add(new Getobj("kennen_ss_aoe_", 3f, 1, "Kennen", "Kennen R"));
