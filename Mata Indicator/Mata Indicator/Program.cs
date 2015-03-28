@@ -48,7 +48,7 @@ namespace Mata_Indicator
                 Game.PrintChat("<font color=\"#4EE2EC\">Mata Indicator</font> 1.0.0.0v [Beta] - <font color=\"#B6B6B4\">E2Slayer</font>");
 
                 Drawing.OnDraw += Drawing_OnDraw;
-                Game.OnGameUpdate += Game_OnGameUpdate;
+                Game.OnUpdate += Game_OnGameUpdate;
             }
             catch (Exception e)
             {
