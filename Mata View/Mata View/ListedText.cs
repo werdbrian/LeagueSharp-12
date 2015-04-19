@@ -5,10 +5,6 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using Color = System.Drawing.Color;
-using SharpDX.Direct3D9;
-using SharpDX.Toolkit;
-using SharpDX.Toolkit.Graphics;
-using SharpDX.XInput;
 
 #endregion
 
