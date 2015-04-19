@@ -126,7 +126,7 @@ namespace Mata_View
         {
 
             // obj_AI_Minion can't type to "ObjectManager.GetUnitByNetworkId<Obj_GeneralParticleEmitter>", so it throw error.
-            if (sender == null || args == null || sender.Type != GameObjectType.obj_GeneralParticleEmmiter ||
+            if (sender == null || args == null || sender.Type != GameObjectType.obj_GeneralParticleEmitter ||
                 !Menus.Menu.Item("activeskill").GetValue<bool>())
                 return;
             if (sender.Name.Contains("missile") || sender.Name.Contains("Minion") ||
@@ -198,7 +198,7 @@ namespace Mata_View
 
         private static void OnDeleteObject(GameObject sender, EventArgs args)
         {
-            if (sender == null || args == null || sender.Type != GameObjectType.obj_GeneralParticleEmmiter ||
+            if (sender == null || args == null || sender.Type != GameObjectType.obj_GeneralParticleEmitter ||
                 sender.Name.Contains("missile") || sender.Name.Contains("Minion") ||
                 !Menus.Menu.Item("activeskill").GetValue<bool>())
                 return;
