@@ -48,7 +48,6 @@ namespace Mata_View___Rework
             SkillList2.Add(new SkillAddP("bluecardlock", "Card_Blue.troy"));
             SkillList2.Add(new SkillAddP("redcardlock", "Card_Red.troy"));
             SkillList2.Add(new SkillAddP("MaokaiDrain3", "Maokai_Base_R_Aura.troy"));
-            // SkillList2.Add(new SkillAddP("VelkozR", "VelKoz_Base_R_beam.troy"));
             //  SkillList2.Add(new SkillAddP("infiniteduresschannel", "InfiniteDuress_tar.troy"));
             // SkillList2.Add(new SkillAddP("JaxCounterStrike", "Counterstrike_cas.troy"));
         }
@@ -57,7 +56,6 @@ namespace Mata_View___Rework
         {
             var skilltemp = new List<SkillAdd>
             {
-                //  new SkillAdd("VelKoz_Base_R_beam.troy", 2.5f, 0, "VelKoz", "VelKoz R"),
                 // new SkillAdd("Counterstrike_cas.troy", 2f, 0, "Jax", "Jax E"),
                 //  new SkillAdd("Karthus_Base_R_Target.troy", 3f, 1, "Karthus", "Karthus R(Target)"), work later
                 //  new SkillAdd("InfiniteDuress_tar.troy", 1.8f, 1, "Warwick", "Warwick R"), //work later
