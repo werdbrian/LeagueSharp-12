@@ -27,6 +27,7 @@ namespace Mata_View___Rework
 
         private static void OnProcessSpell(Obj_AI_Base obj, GameObjectProcessSpellCastEventArgs arg)
         {
+            if (obj == null) return;
             try
             {
                 if (ActiveChecker() || !SpellVaildChecker(obj, arg))
