@@ -95,12 +95,13 @@ namespace Mata_Indicator
                             var coneAngle = Champ.Item("Angle" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
                             var abilRange = Champ.Item("Range" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
                             var drawColor = Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>();
+                            var drawColor = bindspell.IsReady() ? Color.Green : Color.Red;
                             var lineWidth = Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
-                            var line = new Geometry.Polygon.Line(ObjectManager.Player.Position, Game.CursorPos, abilRange);
+                            //var line = new Geometry.Polygon.Line(ObjectManager.Player.Position, Game.CursorPos, abilRange);
                             var direction = ObjectManager.Player.Direction.To2D().Perpendicular();
                             var playerPosition = ObjectManager.Player.Position.To2D();
                             Render.Circle.DrawCircle(ObjectManager.Player.Position, Champ.Item("Range" + slot.Key + Player.ChampionName).GetValue<Slider>().Value, Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>(), Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value);
-                            line.Draw(drawColor,lineWidth);
+                          //  line.Draw(drawColor,lineWidth);
                             var currentAngel = coneAngle * (float) Math.PI / 180;
                             var currentScreenPlayer = Drawing.WorldToScreen(ObjectManager.Player.Position);
                             var conePoint1 = playerPosition + abilRange * direction.Rotated(currentAngel);
