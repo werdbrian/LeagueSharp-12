@@ -94,7 +94,7 @@ namespace Mata_Indicator
                         {
                             var coneAngle = Champ.Item("Angle" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
                             var abilRange = Champ.Item("Range" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
-                            var drawColor = Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>;
+                            var drawColor = Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>();
                             var lineWidth = Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
                            var line = new Geometry.Polygon.Line(ObjectManager.Player.Position, Game.CursorPos, abilRange);
 
