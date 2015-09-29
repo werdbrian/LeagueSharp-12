@@ -130,7 +130,7 @@ namespace Mata_Indicator
             }
         }
 
-2
+
         public static void MenuHandlerRun()
         {
             Menu.AddSubMenu(Champ);
