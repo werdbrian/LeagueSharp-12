@@ -97,12 +97,12 @@ namespace Mata_Indicator
                             var drawColor = Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>();
                             var lineWidth = Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
                            var line = new Geometry.Polygon.Line(ObjectManager.Player.Position, Game.CursorPos, abilRange);
-
+                             var direction = ObjectManager.Player.Direction.To2D().Perpendicular();
                             Render.Circle.DrawCircle(ObjectManager.Player.Position, Champ.Item("Range" + slot.Key + Player.ChampionName).GetValue<Slider>().Value, Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>(), Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value);
                             line.Draw(drawColor,lineWidth);
-                            var currentAngel = coneAngel * (float) Math.PI / 180;
+                            var currentAngel = coneAngle * (float) Math.PI / 180;
                             var conePoint1 = playerPosition + abilRange * direction.Rotated(currentAngel);
-                            currentAngel = (360-coneAngel) * (float) Math.PI / 180;
+                            currentAngel = (360-coneAngle) * (float) Math.PI / 180;
                             var conePoint2 = playerPosition + abilRange * direction.Rotated(currentAngel);
                         }
                         break;
