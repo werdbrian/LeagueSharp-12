@@ -105,8 +105,8 @@ namespace Mata_Indicator
                             var conePoint1 = ObjectManager.Player.Position.to2D() + abilRange * direction.Rotated(currentAngel);
                             currentAngel = (360-coneAngle) * (float) Math.PI / 180;
                             var conePoint2 = ObjectManager.Player.Position.to2D() + abilRange * direction.Rotated(currentAngel);
-                            var currentScreenCheckPoint1 = Drawing.WorldToScreen(currentCheckPoint1.To3D());
-                            var currentScreenCheckPoint2 = Drawing.WorldToScreen(currentCheckPoint2.To3D());
+                            var currentScreenCheckPoint1 = Drawing.WorldToScreen(conePoint1.To3D());
+                            var currentScreenCheckPoint2 = Drawing.WorldToScreen(conePoint2.To3D());
                             Drawing.DrawLine(currentScreenPlayer.X, currentScreenPlayer.Y, currentScreenCheckPoint1.X, 
                             currentScreenCheckPoint1.Y, 2, drawColor);
                             Drawing.DrawLine(currentScreenPlayer.X, currentScreenPlayer.Y, currentScreenCheckPoint2.X, 
