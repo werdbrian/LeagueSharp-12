@@ -48,17 +48,17 @@ namespace Mata_View___Rework
             SkillList2.Add(new SkillAddP("bluecardlock", "Card_Blue.troy"));
             SkillList2.Add(new SkillAddP("redcardlock", "Card_Red.troy"));
             SkillList2.Add(new SkillAddP("MaokaiDrain3", "Maokai_Base_R_Aura.troy"));
-            //  SkillList2.Add(new SkillAddP("infiniteduresschannel", "InfiniteDuress_tar.troy"));
-            // SkillList2.Add(new SkillAddP("JaxCounterStrike", "Counterstrike_cas.troy"));
+            SkillList2.Add(new SkillAddP("infiniteduresschannel", "InfiniteDuress_tar.troy"));
+            SkillList2.Add(new SkillAddP("JaxCounterStrike", "Counterstrike_cas.troy"));
         }
 
         public static void SkillPro()
         {
             var skilltemp = new List<SkillAdd>
             {
-                // new SkillAdd("Counterstrike_cas.troy", 2f, 0, "Jax", "Jax E"),
-                //  new SkillAdd("Karthus_Base_R_Target.troy", 3f, 1, "Karthus", "Karthus R(Target)"), work later
-                //  new SkillAdd("InfiniteDuress_tar.troy", 1.8f, 1, "Warwick", "Warwick R"), //work later
+                 new SkillAdd("Counterstrike_cas.troy", 2f, 0, "Jax", "Jax E"),
+            //    new SkillAdd("Karthus_Base_R_Target.troy", 3f, 1, "Karthus", "Karthus R(Target)"), work later
+              //    new SkillAdd("InfiniteDuress_tar.troy", 1.8f, 1, "Warwick", "Warwick R"), //work later
                 new SkillAdd("Maokai_Base_R_Aura.troy", 10f, 0, "Maokai", "Maokai R"),
                 new SkillAdd("Card_Yellow.troy", 6f, 0, "TwistedFate", "TwistedFate W"),
                 new SkillAdd("Card_Blue.troy", 6f, 0, "TwistedFate", "TwistedFate W"),
