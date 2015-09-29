@@ -101,9 +101,9 @@ namespace Mata_Indicator
                             Render.Circle.DrawCircle(ObjectManager.Player.Position, Champ.Item("Range" + slot.Key + Player.ChampionName).GetValue<Slider>().Value, Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>(), Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value);
                             line.Draw(drawColor,lineWidth);
                             var currentAngel = coneAngle * (float) Math.PI / 180;
-                            var conePoint1 = playerPosition + abilRange * direction.Rotated(currentAngel);
+                            var conePoint1 = ObjectManager.Player.Position + abilRange * direction.Rotated(currentAngel);
                             currentAngel = (360-coneAngle) * (float) Math.PI / 180;
-                            var conePoint2 = playerPosition + abilRange * direction.Rotated(currentAngel);
+                            var conePoint2 = ObjectManager.Player.Position + abilRange * direction.Rotated(currentAngel);
                         }
                         break;
 
