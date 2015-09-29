@@ -151,6 +151,8 @@ namespace Mata_Indicator
             var btkey = ButtonKey.GetValue(number - 1);
             var slot1Editor = (new MenuItem("Editor" + number + Player.ChampionName, "Range Editor").SetValue(new KeyBind(btkey.ToString().ToCharArray()[0], KeyBindType.Press)));
             var slot1Width = new MenuItem("Width" + number + Player.ChampionName, "Width").SetValue(new Slider(5, 10, 1));
+            var slot1Angle = new MenuItem("Angle" + number + Player.ChampionName, "angle").SetValue(new Slider(0, 180, 1));
+
             var slot1Bind = (new MenuItem("Bindspell" + number + Player.ChampionName, "Bind Spell").SetValue(new StringList(new[] { "None", "Q", "W", "E", "R" })));
             var slot1Enable = (new MenuItem("Enable" + number + Player.ChampionName, "Enable").SetValue(false));
 
@@ -160,6 +162,7 @@ namespace Mata_Indicator
             Champ.SubMenu("Slot " + number + Player.ChampionName).AddItem(slot1Range);
             Champ.SubMenu("Slot " + number + Player.ChampionName).AddItem(slot1Editor);
             Champ.SubMenu("Slot " + number + Player.ChampionName).AddItem(slot1Width);
+            Champ.SubMenu("Slot " + number + Player.ChampionName).AddItem(slot1Angle);
             Champ.SubMenu("Slot " + number + Player.ChampionName).AddItem(slot1Bind);
             Champ.SubMenu("Slot " + number + Player.ChampionName).AddItem(slot1Enable);
 
