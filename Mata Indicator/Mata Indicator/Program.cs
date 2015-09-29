@@ -98,13 +98,14 @@ namespace Mata_Indicator
                             var lineWidth = Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value;
                             var line = new Geometry.Polygon.Line(ObjectManager.Player.Position, Game.CursorPos, abilRange);
                             var direction = ObjectManager.Player.Direction.To2D().Perpendicular();
+                            var playerPosition = ObjectManager.Player.Position.To2D();
                             Render.Circle.DrawCircle(ObjectManager.Player.Position, Champ.Item("Range" + slot.Key + Player.ChampionName).GetValue<Slider>().Value, Champ.Item("Color" + slot.Key + Player.ChampionName).GetValue<Color>(), Champ.Item("Width" + slot.Key + Player.ChampionName).GetValue<Slider>().Value);
                             line.Draw(drawColor,lineWidth);
                             var currentAngel = coneAngle * (float) Math.PI / 180;
                             var currentScreenPlayer = Drawing.WorldToScreen(ObjectManager.Player.Position);
-                            var conePoint1 = ObjectManager.Player.Position.to2D() + abilRange * direction.Rotated(currentAngel);
+                            var conePoint1 = playerPosition + abilRange * direction.Rotated(currentAngel);
                             currentAngel = (360-coneAngle) * (float) Math.PI / 180;
-                            var conePoint2 = ObjectManager.Player.Position.to2D() + abilRange * direction.Rotated(currentAngel);
+                            var conePoint2 = playerPosition + abilRange * direction.Rotated(currentAngel);
                             var currentScreenCheckPoint1 = Drawing.WorldToScreen(conePoint1.To3D());
                             var currentScreenCheckPoint2 = Drawing.WorldToScreen(conePoint2.To3D());
                             Drawing.DrawLine(currentScreenPlayer.X, currentScreenPlayer.Y, currentScreenCheckPoint1.X, 
